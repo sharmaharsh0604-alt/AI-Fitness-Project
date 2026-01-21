@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs';
-import { DumbbellIcon, HomeIcon, UserIcon, Zap, ZapIcon } from 'lucide-react';
+import { SignInButton, SignUpButton, useUser } from '@clerk/nextjs';
+import { ZapIcon } from 'lucide-react';
 import { Button } from './ui/button';
 
 export function Navbar() {
-  const { isSignedIn } = useUser();
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md border-b border-border py-3 px-10">
       <div className="container mx-auto flex items-center justify-between">

@@ -1,7 +1,6 @@
 import { UserButton } from '@clerk/nextjs';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { Zap } from 'lucide-react';
-import Link from 'next/link';
 
 export default function DashboardLayout({
   children,

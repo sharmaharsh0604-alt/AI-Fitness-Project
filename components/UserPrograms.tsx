@@ -17,6 +17,7 @@ import {
   ShieldIcon,
 } from 'lucide-react';
 import { USER_PROGRAMS } from '@/constants';
+import Image from 'next/image';
 
 const UserPrograms = () => {
   return (
@@ -94,13 +95,15 @@ const UserPrograms = () => {
 
               <CardHeader className="pt-6 px-5">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="h-16 w-16 rounded-full overflow-hidden border border-border">
-                    <img
+                  <div className="h-16 w-16 rounded-full overflow-hidden border border-border relative">
+                    <Image
                       src={program.profilePic}
-                      alt={`${program.first_name}`}
-                      className="h-full w-full object-cover"
+                      alt={program.first_name}
+                      fill
+                      className="object-cover"
                     />
                   </div>
+
                   <div>
                     <CardTitle className="text-xl text-foreground">
                       {program.first_name}
