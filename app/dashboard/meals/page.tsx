@@ -10,6 +10,14 @@ import { Loader2, Utensils, Save, Sparkles, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { LoadingState } from '@/components/dashboard/LoadingState';
 
+/* ✅ TYPE FOR MEALS (fixes `any`) */
+type Meal = {
+  _id: string;
+  plan: string;
+  dietaryPreference?: string;
+  createdAt: number;
+};
+
 export default function MealsPage() {
   const { user } = useUser();
   const [isGenerating, setIsGenerating] = useState(false);
@@ -56,9 +64,11 @@ export default function MealsPage() {
       }
 
       setGeneratedPlan(data.mealPlan);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error:', error);
-      setError(error.message || 'Failed to generate meal plan');
+      setError(
+        error instanceof Error ? error.message : 'Failed to generate meal plan',
+      );
     } finally {
       setIsGenerating(false);
     }
@@ -79,7 +89,7 @@ export default function MealsPage() {
 
       alert('✅ Meal plan saved successfully!');
       setGeneratedPlan(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error:', error);
       setError('Failed to save meal plan. Please try again.');
     } finally {
@@ -114,6 +124,7 @@ export default function MealsPage() {
               Create a personalized nutrition plan based on your dietary
               preferences
             </p>
+
             {!userData?.dietaryPreference && (
               <div className="flex items-start gap-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg mb-4">
                 <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
@@ -123,12 +134,14 @@ export default function MealsPage() {
                 </p>
               </div>
             )}
+
             {error && (
               <div className="flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg mb-4">
                 <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
                 <p className="text-red-500 text-sm">{error}</p>
               </div>
             )}
+
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !userData?.dietaryPreference}
@@ -170,6 +183,7 @@ export default function MealsPage() {
                 )}
               </Button>
             </div>
+
             <div className="bg-slate-800/50 rounded-lg p-6 whitespace-pre-wrap text-sm max-h-[600px] overflow-y-auto border border-slate-700">
               {generatedPlan}
             </div>
@@ -180,46 +194,46 @@ export default function MealsPage() {
       {/* Saved Meals */}
       <div>
         <h3 className="text-xl font-semibold mb-4">Saved Meal Plans</h3>
+
         {!meals ? (
           <LoadingState message="Loading your meal plans..." />
-        ) : (
+        ) : meals.length > 0 ? (
           <div className="space-y-4">
-            {meals.length > 0 ? (
-              meals.map((meal) => (
-                <Card
-                  key={meal._id}
-                  className="p-6 bg-slate-900/50 border-slate-800 hover:border-slate-700 transition-all">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h4 className="font-semibold text-lg mb-2">
-                        {meal.dietaryPreference || 'Custom'} Diet Plan
-                      </h4>
-                      <p className="text-sm text-slate-400">
-                        Created {new Date(meal.createdAt).toLocaleDateString()}{' '}
-                        at {new Date(meal.createdAt).toLocaleTimeString()}
-                      </p>
-                    </div>
-                    <Badge className="bg-green-600/10 text-green-500">
-                      Saved
-                    </Badge>
+            {meals.map((meal: Meal) => (
+              <Card
+                key={meal._id}
+                className="p-6 bg-slate-900/50 border-slate-800 hover:border-slate-700 transition-all">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2">
+                      {meal.dietaryPreference || 'Custom'} Diet Plan
+                    </h4>
+                    <p className="text-sm text-slate-400">
+                      Created {new Date(meal.createdAt).toLocaleDateString()} at{' '}
+                      {new Date(meal.createdAt).toLocaleTimeString()}
+                    </p>
                   </div>
-                  <div className="bg-slate-800/50 rounded-lg p-4 whitespace-pre-wrap text-sm max-h-96 overflow-y-auto border border-slate-700">
-                    {meal.plan}
-                  </div>
-                </Card>
-              ))
-            ) : (
-              <Card className="p-12 bg-slate-900/50 border-slate-800 text-center">
-                <Utensils className="w-16 h-16 mx-auto mb-4 text-slate-600" />
-                <p className="text-slate-400 text-lg mb-2">
-                  No saved meal plans yet
-                </p>
-                <p className="text-slate-500 text-sm">
-                  Generate your first one above!
-                </p>
+                  <Badge className="bg-green-600/10 text-green-500">
+                    Saved
+                  </Badge>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-lg p-4 whitespace-pre-wrap text-sm max-h-96 overflow-y-auto border border-slate-700">
+                  {meal.plan}
+                </div>
               </Card>
-            )}
+            ))}
           </div>
+        ) : (
+          <Card className="p-12 bg-slate-900/50 border-slate-800 text-center">
+            <Utensils className="w-16 h-16 mx-auto mb-4 text-slate-600" />
+            <p className="text-slate-400 text-lg mb-2">
+              No saved meal plans yet
+            </p>
+            <p className="text-slate-500 text-sm">
+              Generate your first one above!
+            </p>
+          </Card>
         )}
       </div>
     </div>
