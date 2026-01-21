@@ -21,58 +21,7 @@ An intelligent fitness and nutrition companion powered by AI that creates person
 - **AI**: Google Gemini API
 - **Deployment**: Vercel
 
-## 🚀 Getting Started
 
-### Prerequisites
-
-- Node.js 18+ installed
-- npm or yarn package manager
-
-### Installation
-
-1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd ai-fitness-coach
-```
-
-2. Install dependencies
-
-```bash
-npm install
-```
-
-3. Set up environment variables
-
-Create a `.env.local` file in the root directory:
-
-```env
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
-CLERK_SECRET_KEY=your_clerk_secret
-
-# Convex Database
-NEXT_PUBLIC_CONVEX_URL=your_convex_url
-CONVEX_DEPLOYMENT=your_convex_deployment
-
-# Google Gemini AI (Optional - mock data works without it)
-GEMINI_API_KEY=your_gemini_key
-```
-
-4. Run Convex development server
-
-```bash
-npx convex dev
-```
-
-5. Run Next.js development server (in a new terminal)
-
-```bash
-npm run dev
-```
-
-6. Open [http://localhost:3000](http://localhost:3000)
 
 ## 📁 Project Structure
 
