@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { SignInButton, SignUpButton, useUser } from '@clerk/nextjs';
+import { SignInButton, SignUpButton } from '@clerk/nextjs';
 import { ZapIcon } from 'lucide-react';
 import { Button } from './ui/button';
 
