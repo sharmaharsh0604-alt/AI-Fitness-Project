@@ -23,7 +23,9 @@ export default async function DashboardPage() {
         <h2 className="text-3xl font-bold mb-2">
           Welcome back, {user?.firstName || 'User'}! 👋
         </h2>
-        <p className="text-slate-400">Here's your fitness overview for today</p>
+        <p className="text-slate-400">
+          Here is your fitness overview for today
+        </p>
       </div>
 
       {/* Stats Grid */}
